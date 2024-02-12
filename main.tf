@@ -16,7 +16,7 @@ provider "google" {
 }
 
 #for_each example
-resource "google_storage_bucket" "my-bkt0" {
+/*resource "google_storage_bucket" "my-bkt0" {
     for_each = toset(["1","2","4","5"])
     name = "trusty-obelisk-412501-test-${each.key}-reddi"
     location = "US"
@@ -28,6 +28,16 @@ resource "google_storage_bucket" "my-bkt0" {
     name = "trusty-obelisk-412501-test-${count.index}"
     location = "US"
   
+}*/
+
+#conditional expressions
+variable "env"{
 }
 
 
+resource "google_storage_bucket" "my-bkt0" {
+    count = var.env=="dev" ? 5:0
+    name = "trusty-obelisk-412501-test-${count.index}"
+    location = "US"
+  
+}
